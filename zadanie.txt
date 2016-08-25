@@ -1,0 +1,85 @@
+Hotel
+Zadanie polega na zaimplementowaniu fragmentu komputerowego systemu obsługującego rezerwacje hotelowe.
+
+Hotel dysponuje pewną liczbą pokojów. Charakterystyka każdego pokoju obejmuje: unikatowy numer pokoju oraz jego cechy: liczbę osób, które mogą w nim zamieszkać, cenę, styl wystroju (orientalny, morski, nowoczesny, rustykalny, secesyjny), kolorystykę (szary, stalowy, purpurowy, morski, seledynowy, jasnozielony), kierunek w który skierowane są okna (północ, południe, wschód, zachód) oraz dostęp do internetu (tak lub nie).
+
+Goście dokonując rezerwacji pokoju wypełniają ankietę, w której podają datę przyjazdu i liczbę dni pobytu oraz opisują swoje wymagania - dla każdej cechy pokoju wybierają z listy dostępnych wartości akceptowaną wartość cechy. Przy wypełnianiu ankiety klient musi wypełnić wszystkie jej pola wpisując w nie konkretne wartości wybrane z listy wartości dostępnych.
+
+Zamówienia klientów umieszczane są na liście zamówień (kolejka prosta) wraz z informacją, kto złożył zamówienie.
+
+Następnie recepcjonista wyszukuje pokój, który jest dostępny w podanym przez gościa przedziale czasowym. Jeśli nie ma takiego pokoju, zamówienie jest anulowane bez rozpatrywania dalszych wymagań klienta.
+
+W recepcji hotelu pracuje wiele osób. Każda z nich w pracy stosuje pewną strategię dopasowywania pokoju do ankiety:
+
+strategia perfekcjonistyczna - wyszukiwany jest pokój spełniający dokładnie wszystkie wymagania podane w ankiecie. Jeśli jest wiele takich pokojów, wybierany jest ten o najniższym numerze.
+strategia losowa - wybierany jest losowy wolny pokój.
+strategia złośliwa - wybierany jest pokój spełniający najmniejszą możliwą liczbę wymagań. Jeśli jest wiele takich pokojów to wybierany jest najdroższy, a jeśli jest takich więcej niż jeden to ten o najwyższym numerze.
+strategia aproksymacyjna - wybierany jest pokój spełniający maksymalnie wiele wymogów. Jeśli jest wiele takich pokojów to wybierany jest najdroższy, a jeśli jest takich więcej niż jeden wybierany jest ten o najniższym numerze.
+możliwe jest pojawienie się w przyszłości jakichś innych strategii.
+Po wybraniu pokoju przez recepcjonistę pyta on klienta, który złożył zamówienie, czy akceptuje wybór. Jeśli tak, rezerwacja jest potwierdzana i zamówienie usuwane jest z listy zamówień . W przeciwnym przypadku zamówienie przenoszone jest na koniec listy zamówień i będzie rozpatrywane ponownie, być może przez innego recepcjonistę.
+
+Każde zamówienie może być rozpatrywane co najwyżej trzykrotnie. Jeśli w tym czasie nie zostanie potwierdzone, jest usuwane z listy zamówień.
+
+Klienci proszeni o akceptację propozycji, też stosują rozmaite strategie przy podejmowaniu decyzji:
+
+perfekcjonistyczną - jak wyżej,
+ugodową - klient akceptuje każdą przedstawioną propozycję,
+widokową - klient akceptuje każdą propozycję, w której okna proponowanego pokoju są skierowane tak, jak w zamówieniu,
+połowiczną - spełniona jest co najmniej połowa wymagań,
+budżetową - klient akceptuje każdą propozycję, w której cena nie przekracza ceny podanej w ankiecie,
+być może jakieś inne strategie.
+Klient nie jest informowany o tym, jaką strategię wyboru stosował recepcjonista.
+
+Zadanie
+Należy zaimplementować pakiet hotel zawierający klasy:
+
+Hotel- implementującą procedurę składania zamówień przez klientów oraz ich potwierdzania przez recepcjonistów. W szczególności powinna ona zawierać:
+konstruktor hotelu: Hotel(Pokoj [] pokoje, Recepcjonista [] recepcjonisci)
+metodę: public void akceptuj(Zamowienia[] zamowienie, Pokoje[] pokoj, Recepcjonisci[] recepcjonista ) implementującą procedurę przetwarzania zamówień aż do wyczerpania listy, zgodnie z powyższym opisem.
+metodę public Zamowienie przyjmijZamowienie(Klient klient, Ankieta ankieta)
+metodę main w miarę wyczerpująco ilustrującą działanie opisanego mechanizmu. W metodzie main należy utworzyć przykładowe dane (nie wczytując ich z zewnątrz) i wypisać na standardowe wyjście wyniki testowania opisanych w zadaniu metod.
+Klient - implementującą zachowanie klienta w zakresie niezbędnym do złożenia zamówienia i ewentualnej akceptacji wybranego pokoju.
+Recepcjonista - implementującą zachowanie recepcjonisty w zakresie niezbędnym do tego aby wybrać pokój zgodnie z zamówieniem i stosowaną strategią i uzyskać od klienta akceptację (lub nie) dokonanego wyboru.
+Styl, Kolorystyka, Kierunek - implementujące odpowiednie cechy pokoju jako typy wyliczeniowe (enum).
+Inne klasy niezbędne do zaimplementowania opisanej procedury składania i rozpatrywania zamówień na pokoje.
+Metoda akceptuj klasy Hotel
+Metoda ta przetwarza listę zamówień aż do momentu kiedy wszystkie zamówienia zostaną z niej usunięte. Przetwarzane jest zawsze zamówienie znajdujące się na początku listy. Jeśli nie zostaje ono z listy usunięte, przenoszone jest na jej koniec.
+
+Kolejne zamówienia przetwarzane są przez kolejnych recepcjonistów z listy recepcjonistów. Po jej wyczerpaniu kolejne zamówienie jest przetwarzane przez pierwszego recepcjonistę z listy, itd.
+
+W każdym kroku przetwarzania metoda wypisuje na standardowym wyjściu komunikaty następującej treści:
+
+Recepcjonista: <wizytówka recepcjonisty>
+
+Zamówienie: <szczegóły zamówienia>
+
+Proponowany pokój: <opis pokoju>
+
+Klient: <wizytówka klienta>
+
+tak/nie
+
+Wizytówki klienta i recepcjonisty
+Zarówno klient jak też recepcjonista przedstawiają się imieniem, nazwiskiem oraz stosowaną strategią wyboru/akceptacji. Cała wizytówka powinna być wypisana w jednym wierszu. Przykładowa postać:
+
+Klient: Jan Kowalski, perfekcjonistyczna.
+
+Szczegóły zamówienia i opis pokoju
+Informacja o zamówieniu powinna zawierać pełną informację o wymaganiach klienta zapisaną w jednym wierszu. Wymagane wartości atrybutów powinny występować w kolejności zgodnej z treścią zadania.
+
+Opis pokoju powinien zawierać pełną listę jego atrybutów, z pominięciem numeru pokoju.
+
+Cechy pokoju i kryteria ich oceny
+Przy ocenie zgodności cech wybranego pokoju z zamówieniem brane są pod uwagę wszystkie cechy pokoju, poza jego numerem.
+
+Cechy powinny być reprezentowane w następujący sposób:
+
+liczba osób, które mogą w nim zamieszkać - jako int,
+cena - jako int, bez określenia rodzaju waluty,
+styl wystroju, kolorystyka, kierunek w którym skierowane są okna - jako jedna z wartości odpowiedniego typu wyliczeniowego (Styl, Kolorystyka, Kierunek).
+dostęp do internetu (tak lub nie) - jako boolean.
+Za spełnione uważa się te wymagania, dla których:
+
+dla cech reprezentowanych przez typy wyliczeniowe i wartość logiczną, zachodzi równość,
+dla liczby osób mogących mieszkać w pokoju, liczba miejsc w pokoju jest nie mniejsza niż podana w ankiecie,
+dla ceny pokoju, cena pokoju nie przekracza ceny podanej w ankiecie.
